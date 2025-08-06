@@ -28,6 +28,86 @@
             return userInput;
         }
 
+        // Step 4: Declare score variables in global scope (will be moved inside playGame)
+        let humanScore = 0;
+        let computerScore = 0;
+
+           // Step 5: Write logic to play a single round
+        function playRound(humanChoice, computerChoice) {
+            // Make humanChoice case-insensitive
+            humanChoice = humanChoice.toLowerCase();
+            
+            console.log(`You chose: ${humanChoice}`);
+            console.log(`Computer chose: ${computerChoice}`);
+            
+            // Determine winner
+            if (humanChoice === computerChoice) {
+                console.log("It's a tie!");
+                return;
+            }
+            
+            let humanWins = false;
+            
+            if (humanChoice === "rock" && computerChoice === "scissors") {
+                humanWins = true;
+                console.log("You win! Rock beats Scissors");
+            } else if (humanChoice === "paper" && computerChoice === "rock") {
+                humanWins = true;
+                console.log("You win! Paper beats Rock");
+            } else if (humanChoice === "scissors" && computerChoice === "paper") {
+                humanWins = true;
+                console.log("You win! Scissors beats Paper");
+            } else {
+                console.log(`You lose! ${computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)} beats ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)}`);
+            }
+            
+            // Increment scores
+            if (humanWins) {
+                humanScore++;
+            } else {
+                computerScore++;
+            }
+        }
+
+        // Step 6: Write logic to play the entire game
+        function playGame() {
+            // Reset scores for new game
+            humanScore = 0;
+            computerScore = 0;
+            
+            console.log("=== Welcome to Rock Paper Scissors! ===");
+            console.log("You'll play 5 rounds against the computer.");
+            console.log("");
+            
+            // Play 5 rounds
+            for (let round = 1; round <= 5; round++) {
+                console.log(`--- Round ${round} ---`);
+                
+                const humanSelection = getHumanChoice();
+                const computerSelection = getComputerChoice();
+                
+                playRound(humanSelection, computerSelection);
+                
+                console.log(`Current Score - You: ${humanScore}, Computer: ${computerScore}`);
+                console.log("");
+            }
+            
+            // Declare overall winner
+            console.log("=== GAME OVER ===");
+            console.log(`Final Score - You: ${humanScore}, Computer: ${computerScore}`);
+            
+            if (humanScore > computerScore) {
+                console.log("🎉 Congratulations! You won the game!");
+            } else if (computerScore > humanScore) {
+                console.log("💻 Computer wins the game! Better luck next time!");
+            } else {
+                console.log("🤝 It's a tie game!");
+            }
+        }
+        
+        // Start the game automatically
+        playGame();
+
     </script>
     
 </body>
