@@ -6,6 +6,17 @@
     <title>Rock Paper Scissors</title>
 </head>
 <body>
+<h1>Rock Paper Scissors</h1>
+<div>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+</div>
+<div id="results"></div>
+<div id="score">Score - You: 0, Computer: 0</div>
+
+
+
     <script>
  
 
@@ -37,12 +48,17 @@
             // Make humanChoice case-insensitive
             humanChoice = humanChoice.toLowerCase();
             
-            console.log(`You chose: ${humanChoice}`);
-            console.log(`Computer chose: ${computerChoice}`);
+           // console.log(`You chose: ${humanChoice}`);
+           // console.log(`Computer chose: ${computerChoice}`);
+           const resultsDiv = document.getElementById('results');
+    const scoreDiv = document.getElementById('score');
+
+     // Display choices
+    resultsDiv.innerHTML = `You chose: ${humanChoice}<br>Computer chose: ${computerChoice}<br>`;
             
             // Determine winner
             if (humanChoice === computerChoice) {
-                console.log("It's a tie!");
+                resultsDiv.innerHTML += "It's a tie!";
                 return;
             }
             
@@ -50,15 +66,15 @@
             
             if (humanChoice === "rock" && computerChoice === "scissors") {
                 humanWins = true;
-                console.log("You win! Rock beats Scissors");
+                resultsDiv.innerHTML += "You win! Rock beats Scissors";
             } else if (humanChoice === "paper" && computerChoice === "rock") {
                 humanWins = true;
-                console.log("You win! Paper beats Rock");
+                resultsDiv.innerHTML += "You win! Paper beats Rock";
             } else if (humanChoice === "scissors" && computerChoice === "paper") {
                 humanWins = true;
-                console.log("You win! Scissors beats Paper");
+                resultsDiv.innerHTML += "You win! Scissors beats Paper";
             } else {
-                console.log(`You lose! ${computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)} beats ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)}`);
+                resultsDiv.innerHTML += `You lose! ${computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)} beats ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)}`;
             }
             
             // Increment scores
@@ -67,7 +83,35 @@
             } else {
                 computerScore++;
             }
+        // Update score display
+    scoreDiv.innerHTML = `Score - You: ${humanScore}, Computer: ${computerScore}`;
+     
+    // Check for winner (first to 5 points)
+    if (humanScore === 5 || computerScore === 5) {
+        let winnerMessage = "";
+        if (humanScore === 5) {
+            winnerMessage = "<br><br>🎉 Congratulations! You won the game!";
+        } else {
+            winnerMessage = "<br><br>💻 Computer wins the game! Better luck next time!";
         }
+        
+        resultsDiv.innerHTML += winnerMessage;
+        
+        // Disable buttons after game ends
+        document.getElementById('rock').disabled = true;
+        document.getElementById('paper').disabled = true;
+        document.getElementById('scissors').disabled = true;
+    }
+        
+
+
+}
+
+
+
+        
+
+            
 
         // Step 6: Write logic to play the entire game
         function playGame() {
@@ -80,7 +124,7 @@
             console.log("");
             
             // Play 5 rounds
-            for (let round = 1; round <= 5; round++) {
+          /* for (let round = 1; round <= 5; round++) {
                 console.log(`--- Round ${round} ---`);
                 
                 const humanSelection = getHumanChoice();
@@ -90,7 +134,7 @@
                 
                 console.log(`Current Score - You: ${humanScore}, Computer: ${computerScore}`);
                 console.log("");
-            }
+            } */
             
             // Declare overall winner
             console.log("=== GAME OVER ===");
@@ -105,8 +149,21 @@
             }
         }
         
+// Add event listeners to buttons
+document.getElementById('rock').addEventListener('click', function() {
+    playRound('rock', getComputerChoice());
+});
+
+document.getElementById('paper').addEventListener('click', function() {
+    playRound('paper', getComputerChoice());
+});
+
+document.getElementById('scissors').addEventListener('click', function() {
+    playRound('scissors', getComputerChoice());
+});
+
         // Start the game automatically
-        playGame();
+       // playGame();
 
     </script>
     
